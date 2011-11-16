@@ -1,13 +1,14 @@
+require 'i18n'
 module Jekyll
   class TranslateTag < Liquid::Tag
     def initialize(tag_name, text, tokens)
       super
-      @text = text
+      @text = text.strip
       load_locales
     end
 
     def render(context)
-      I18n.locale = self.site.config.locale
+      I18n.locale = context.registers[:site].config['locale']
       I18n.t "site.#@text"
     end
 
